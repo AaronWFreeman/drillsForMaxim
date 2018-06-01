@@ -4,6 +4,7 @@ mongoose.Promise = global.Promise;
 
 const Todo = require('./models');
 const { PORT, DATABASE_URL } = require('./config');
+const {toDoTasks} = require('./models');
 
 const seedData = require('./db/todos.json');
 
