@@ -7,7 +7,7 @@ const chaiSpies = require('chai-spies');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const toDoTasks = require('../models');
+const {toDoTasks} = require('../models');
 const seedData = require('../db/todos.json');
 const { DATABASE_URL } = require('../config');
 
