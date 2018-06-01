@@ -7,7 +7,7 @@ const chaiSpies = require('chai-spies');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const Todo = require('../models');
+const toDoTasks = require('../models');
 const seedData = require('../db/todos.json');
 const { DATABASE_URL } = require('../config');
 
@@ -15,6 +15,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 chai.use(chaiSpies);
+
 
 describe('Todo API:', function () {
 
@@ -28,7 +29,7 @@ describe('Todo API:', function () {
   
   beforeEach(function () {
     return mongoose.connection.dropDatabase()
-      .then(() => Todo.insertMany(seedData));
+      .then(() => toDoTasks.insertMany(seedData));
   });
 
   afterEach(function () {

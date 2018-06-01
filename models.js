@@ -9,8 +9,12 @@ const toDoTaskSchema = new mongoose.Schema({
 });
 
 toDoTaskSchema.methods.serialize = function() {
-  retur
-}
+  return {
+    id: this._id,
+    title: this.title,
+    completed: this.completed
+  };
+};
 
 const toDoTasks = mongoose.model('toDoTasks', toDoTaskSchema);
 
