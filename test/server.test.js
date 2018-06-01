@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const {toDoTasks} = require('../models');
-const {seedData} = require('../db/todos.json');
+const seedData = require('../db/todos.json');
 const { DATABASE_URL } = require('../config');
 
 const should = chai.should();
@@ -63,7 +63,7 @@ describe('Todo API:', function () {
 
     it('should return correct todo when given an id', function () {
       let doc;
-      return Todo.findOne()
+      return toDoTasks.findOne()
         .then(_doc => {
           doc = _doc
           return chai.request(app).get(`/v1/todos/${doc._id}`);
@@ -143,7 +143,7 @@ describe('Todo API:', function () {
       };
       
       let doc;
-      return Todo.findOne()
+      return toDoTasks.findOne()
         .then(_doc => {
           doc = _doc
           return chai.request(app).put(`/v1/todos/${doc._id}`).send(item);
@@ -164,7 +164,7 @@ describe('Todo API:', function () {
       };
       const spy = chai.spy();
       
-      return Todo.findOne()
+      return toDoTasks.findOne()
         .then(doc => {
           return chai.request(app).put(`/v1/todos/${doc._id}`).send(badItem);
         })
@@ -199,7 +199,7 @@ describe('Todo API:', function () {
   describe('DELETE /v1/todos/:id', function () {
 
     it('should delete an item by id', function () {
-      return Todo.findOne()
+      return toDoTasks.findOne()
         .then(doc => {
           return chai.request(app).delete(`/v1/todos/${doc._id}`);
         })

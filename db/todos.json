@@ -1,10 +1,7 @@
-const seedData = [
+[
   { "title": "Buy Milk",   "completed": false },
   { "title": "Do Laundry",  "completed": true },
   { "title": "Vacuum", "completed": false },
   { "title": "Wash Windows",    "completed": true },
   { "title": "Make Bed", "completed": false }
-];
-
-module.exports = {seedData};
-
+]

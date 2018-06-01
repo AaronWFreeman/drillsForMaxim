@@ -3,11 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 mongoose.Promise = global.Promise;
 
-const Todo = require('./models');
 const { PORT, DATABASE_URL } = require('./config');
 const {toDoTasks} = require('./models');
 
-const {seedData} = require('./db/todos.json');
+const seedData = require('./db/todos.json');
 
 const app = express(); 
 app.use(express.static('public'));
@@ -15,14 +14,14 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 app.get('/v1/todos', (req, res, next) => {
-  Todo.find()
+  toDoTasks.find()
     .then(todos => res.json(todos.map(todo => todo.serialize())))
     .catch(next);
 });
 
 app.get('/v1/todos/:id', (req, res, next) => {
   const id = req.params.id;
-  Todo.findById(id)
+  toDoTasks.findById(id)
     .then(item => {
       if (item) {
         res.json(item.serialize());
@@ -44,7 +43,7 @@ app.post('/v1/todos', (req, res, next) => {
   }
   
   // Using promises
-  Todo.create({title})
+  toDoTasks.create({title})
     .then(newItem => {
       res.status(201)
         .location(`${req.originalUrl}/${newItem.id}`)
@@ -71,7 +70,7 @@ app.put('/v1/todos/:id', (req, res, next) => {
     return next(err);
   }
   // Using promises
-  Todo.findByIdAndUpdate(id, updateItem, { new: true })
+  toDoTasks.findByIdAndUpdate(id, updateItem, { new: true })
     .then(item => {
       if (item) {
         res.json(item.serialize());
@@ -85,7 +84,7 @@ app.put('/v1/todos/:id', (req, res, next) => {
 app.delete('/v1/todos/:id', (req, res, next) => {
   const id = req.params.id;
   // Using promises
-  Todo.findByIdAndRemove(id)
+  toDoTasks.findByIdAndRemove(id)
     .then(count => {
       if (count) {
         res.status(204).end();
@@ -117,7 +116,7 @@ if (require.main === module) {
   console.log('============ SERVER RUNNING ==========')
   mongoose.connect(DATABASE_URL, { useMongoClient: true })
     .then(() => {
-      Todo.insertMany(seedData);  
+      toDoTasks.insertMany(seedData);  
     }) 
     .catch(err => {
       console.error('ERROR: Mongoose failed to connect! Is the database running?');
